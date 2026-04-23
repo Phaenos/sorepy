@@ -1,0 +1,22 @@
+[project]
+name = "sorepy"
+version = "0.0.1"
+authors = [
+  { name="Filip Kovjanić", email="filip.kovja@gmail.com" },
+]
+description = " A basic web aplication for tracking soreness after working out."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "GPL-3.0-or-later"
+license-files = ["LICEN[CS]E*"]
+dependencies = [
+    "flask",
+    "gunicorn",
+]
+
+[project.urls]
+Homepage = "https://github.com/phaenos/sorepy"
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"

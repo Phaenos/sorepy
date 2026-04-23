@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Input Todays Soreness</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+	<header>
+		<h1>sorepy</h1>
+		<p>soreness tracker</p>
+	</header>
+	<p>todays input</p>
+	<form action="" method="post">
+		<table>
+			<tbody>
+				<tr>
+					<td class="table_muscle">muscle</td>
+					<td class="table_ye">sore</td>
+					<td class="table_to">work</td>
+				</tr>
+				{% for muscle in current_muscles %}
+					<tr>
+						<td class="table_muscle">
+							<label for="{{muscle.name}}">{{ muscle.name }}</label>
+						</td>
+						<td class="table_ye">
+							<input type="checkbox" id="sore-{{muscle.name}}" name="sore-{{muscle.name}}" value="sore-{{muscle.name}}" {% if
+								muscle.is_sore(today)%} checked {% endif %}>
+						</td>
+						<td class="table_to">
+							<input type="checkbox" id="work-{{muscle.name}}" name="work-{{muscle.name}}" value="work-{{muscle.name}}" {% if
+								muscle.is_work(today)%} checked {% endif %}>
+							<br>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<input class="submit" type="submit" value="submit">
+	</form>
+	<a href="/"><button type="button">back</button></a>
+</body>
+
+</html>

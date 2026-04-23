@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>sorepy</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+	<link rel="apple-touch-icon" sizes="180x180" href="static/images/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="static/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="static/images/favicon-16x16.png">
+	<link rel="manifest" href="static/images/site.webmanifest">
+</head>
+
+<body>
+	<header>
+		<h1>sorepy</h1>
+		<p>soreness tracker</p>
+	</header>
+	<div class="main">
+		<table>
+			<tr>
+				<th class="table_muscle">muscle</th>
+				<th class="table_ye">ye</th>
+				<th class="table_to">to</th>
+				<th class="table_desc">description</th>
+			</tr>
+			{% for muscle in current_muscles %}
+				<tr>
+					<td class="table_muscle">{{ muscle.name }}</td>
+					<td class="table_ye">
+						{% if muscle.is_work(yesterday) and muscle.is_sore(yesterday) %}
+							sw
+						{% elif muscle.is_work(yesterday) %}
+							w
+						{% elif muscle.is_sore(yesterday) %}
+							s
+						{% else %}
+							o
+						{% endif %}
+					</td>
+					<td class="table_to">
+						{% if muscle.is_work(today) and muscle.is_sore(today) %}
+							sw
+						{% elif muscle.is_work(today) %}
+							w
+						{% elif muscle.is_sore(today) %}
+							s
+						{% else %}
+							o
+						{% endif %}
+					</td>
+					<td class="table_desc">{{ muscle.desc }}</td>
+				</tr>
+			{% endfor %}		
+		</table>
+	<a href="/input" id="input_btn"><button type="button">input soreness</button></a>
+	</div>
+</body>
+
+</html>
