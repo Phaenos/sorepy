@@ -7,8 +7,8 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-VOLUME /data
+VOLUME /sorepy/data/
 
 EXPOSE 5000
 
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "sorepy:app"]
+CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:5000", "sorepy:app"]
