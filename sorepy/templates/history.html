@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}sorepy - history{% endblock %}
+{% block content %}
+<div class="main">
+	<p>history</p>
+	<form method="get">
+		<label for="year">year:</label>
+		<input id="in_year" type="number" name="year" min="1" step="1" value="{{ year }}">
+		<label for="month">month:</label>
+		<select name="month" id="in_month">
+			{% for m in range(1,13) %}
+				{% if m == month %}
+					<option value="{{ m }}" selected>{{ m }}</option>
+				{% else %}
+					<option value="{{ m }}">{{ m }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>
+		<br>
+		<button type="submit">filter</button>
+	</form>
+	<div id="hist_div">
+		<table id="table_history">
+			<tr>
+				<th class="table_muscle">muscles</th>
+				{% for date in dates %}
+				<th {% if date == today.date().isoformat() %}class="table_to"{% endif %}>{{date[-2:]}}</th>	
+				{% endfor%}
+			</tr>
+			{% for muscle in current_muscles %}
+				<tr>
+					<th class="table_muscle">{{muscle.name}}</th>
+					{% for date in dates %}
+						<td
+							{% if muscle.is_work(date) and muscle.is_sore(date) %}
+								class="s">s<span class="w">w</span>
+							{% elif muscle.is_work(date) %}
+								class="w">w
+							{% elif muscle.is_sore(date) %}
+								class="s">s
+							{% else %}
+								class="o">o
+							{% endif %}
+						</td>
+					{% endfor %}
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<a href="/history"><button type="button">today</button></a>
+	<br>
+	<a href="/"><button type="button">home</button></a>
+</div>
+{% endblock %}

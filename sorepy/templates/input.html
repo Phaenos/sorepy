@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Input Todays Soreness</title>
-	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-
-<body>
-	<header>
-		<h1>sorepy</h1>
-		<p>soreness tracker</p>
-	</header>
+{% extends "base.html" %}
+{% block title %}sorepy - input{% endblock %}
+{% block content %}
 	<p>todays input</p>
 	<form action="" method="post">
 		<table>
@@ -43,6 +31,4 @@
 		<input class="submit" type="submit" value="submit">
 	</form>
 	<a href="/"><button type="button">back</button></a>
-</body>
-
-</html>
+{% endblock %}

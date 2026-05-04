@@ -2,6 +2,7 @@
 
 from flask import Flask, request, redirect, url_for
 from datetime import datetime, timedelta
+import calendar
 from flask.templating import render_template
 import pickle
 
@@ -124,6 +125,19 @@ def set_desc(current_muscles):
         else:
             muscle.desc = "healed a while ago"
 
+# Writing all dates in given month do a list
+def dates_in_month(year, month):
+
+    dates = []
+    max_days = calendar.monthrange(year, month)[1]
+    
+    for day in range(1, max_days+1):
+
+        date = "{}-{:02d}-{:02d}".format(year, month, day)
+        dates.append(date)
+
+    return dates
+
 ### STARTING THE APP ###
 
 try:
@@ -178,4 +192,27 @@ def input():
         return redirect(url_for("index"))
 
     return render_template('input.html', error=error, current_muscles = current_muscles, today = today)
+
+@app.route("/history", methods=['POST', 'GET'])
+def history():
+    
+    today = datetime.now()
+    year = today.year
+    month = today.month
+    dates = dates_in_month(year, month)
+
+    if request.method == 'GET':
+
+        try:
+            year = request.form["year"]
+            month = request.form["month"]
+        except:
+            year = request.args.get('year', year)
+            month = request.args.get('month', month)
+
+        year = int(year)
+        month = int(month)
+        dates = dates_in_month(year, month)
+
+    return render_template('history.html', year=year, month=month, dates=dates, current_muscles=current_muscles, today=today)
 

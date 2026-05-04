@@ -41,8 +41,24 @@ table, th, td {
 th {
 	padding: 2px 1rem;
 }
+#table_history th {
+	padding: 2px 0.5rem;
+}
+#table_history .table_muscle {
+	background-color: #1e1e2e;
+	position: sticky;
+	left: 0;
+	box-shadow: 10px 0px 3px -3px #1e1e2e;
+}
+td.s {
+	color: #fab387;
+}
+td.w, span.w {
+	color: #a6e3a1;
+}
 .table_muscle {
 	color: #f2cdcd;
+	min-width: 86px;
 }
 .table_ye {
 	color: #fab387;
@@ -55,6 +71,28 @@ th {
 	padding-left: 4px;
 	text-align: left;
 }
+#hist_div {
+	display:block;
+	overflow-x: auto;
+}
+#table_history {
+	position: relative;
+	overflow-x: auto;
+}
+#in_year, #in_month {
+	background-color: #45475a;
+	color: #cdd6f4;
+	border: none;
+	max-width: 60px;
+	border-radius: 2px;
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .5);
+	padding: 5px;
+	margin-bottom: 0.5rem;
+}
+#in_month option {
+	background-color: #45475a;
+	color: #cdd6f4;
+}
 button, .submit {
 	background-color: #45475a;
 	color: #cdd6f4;
@@ -63,6 +101,9 @@ button, .submit {
 	padding: 5px 20px;
 	margin-bottom: 0.5rem;
 	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .5);
+}
+button:hover {
+	cursor: pointer;
 }
 input[type="checkbox"] {
 	height: 1.5rem;
