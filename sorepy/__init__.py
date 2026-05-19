@@ -82,33 +82,31 @@ def save_state(obj):
         print("Saving error!\n")
 
 # ckeck current muscles against form muscles and add soreness date to tracking
-def add_date_to_muscles(request) -> None:
+def add_date_to_muscles(request, date) -> None:
 
     global current_muscles
-    
-    today = datetime.now().date().isoformat()
 
     # Step 1: add checked muscles soreness
     for var in request.form:
         if var[:4] == "sore":
             for muscle in current_muscles:
                 if muscle.name == var[5:]:
-                    muscle.track(today, "s")
+                    muscle.track(date, "s")
         
         if var[:4] == "work":
             for muscle in current_muscles:
                 if muscle.name == var[5:]:
-                    muscle.track(today, "w")
+                    muscle.track(date, "w")
 
     # Step 2: remove unchecked muscles soreness
     for muscle in current_muscles:
-        if muscle.is_sore(today):
+        if muscle.is_sore(date):
             if "sore-" + muscle.name not in request.form:
-                muscle.untrack(today, "s")
+                muscle.untrack(date, "s")
 
-        if muscle.is_work(today):
+        if muscle.is_work(date):
             if "work-" + muscle.name not in request.form:
-                muscle.untrack(today, "w")
+                muscle.untrack(date, "w")
 
 # setting description based on date last sore
 def set_desc(current_muscles):
@@ -182,16 +180,23 @@ def index():
 def input():
     error = None
     today = datetime.now().date().isoformat()
+    date = today
+
+    # change date for input
+    if request.args.get("date"):
+        date = request.args.get("date")
+    else:
+        date = today
 
     # handle form input to muscle object
     if request.method == 'POST':
-        add_date_to_muscles(request)
+        add_date_to_muscles(request, date)
 
         save_state(current_muscles)
 
         return redirect(url_for("index"))
 
-    return render_template('input.html', error=error, current_muscles = current_muscles, today = today)
+    return render_template('input.html', error=error, current_muscles = current_muscles, date = date)
 
 @app.route("/history", methods=['POST', 'GET'])
 def history():

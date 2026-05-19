@@ -1,0 +1,35 @@
+#!/bin/bash
+#GITHUB
+
+echo "Adding all file changes and pushing to github..."
+git add .
+read -p "Input commit message:" msg
+git commit -m "$msg"
+git push
+
+echo -e "\e[31mIn github add new release version\e[0m"
+
+#PYPI
+
+echo "Building and publishing to PYPI..."
+
+#change version in pyproject.toml
+
+echo "old version was:"
+grep "version" pyproject.toml
+o_ver=`grep "version" pyproject.toml`
+read -p "Input new version:" n_ver
+sed -i "s/$o_ver/$new_ver/"
+
+python3 -m pip install --upgrade pip
+python3 -m pip install --upgrade build
+python3 -m build
+python3 -m pip install --upgrade twine
+python3 -m twine upload --repository pypi dist/*
+
+#DOCKERHUB
+
+echo "Building and publishing to docker..."
+
+sudo docker build -t phaenos/sorepy .
+sudo docker push phaenos/sorepy

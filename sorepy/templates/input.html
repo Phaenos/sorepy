@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block title %}sorepy - input{% endblock %}
 {% block content %}
-	<p>todays input</p>
+	<p>input</p>
+	<form action="" method="get">
+		<input type="date" class="submit" name="date" value="{{date}}" onchange="this.form.submit();">
+	</form>
 	<form action="" method="post">
 		<table>
 			<tbody>
@@ -17,11 +20,11 @@
 						</td>
 						<td class="table_ye">
 							<input type="checkbox" id="sore-{{muscle.name}}" name="sore-{{muscle.name}}" value="sore-{{muscle.name}}" {% if
-								muscle.is_sore(today)%} checked {% endif %}>
+								muscle.is_sore(date)%} checked {% endif %}>
 						</td>
 						<td class="table_to">
 							<input type="checkbox" id="work-{{muscle.name}}" name="work-{{muscle.name}}" value="work-{{muscle.name}}" {% if
-								muscle.is_work(today)%} checked {% endif %}>
+								muscle.is_work(date)%} checked {% endif %}>
 							<br>
 						</td>
 					</tr>
