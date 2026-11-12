@@ -1,0 +1,8 @@
+[Unit]
+Description=Sorepy server
+
+[Service]
+ExecStart=/home/{username}/.sorepy/.venv/bin/gunicorn -w 1 -b 0.0.0.0:5000 sorepy:app
+
+[Install]
+WantedBy=multi-user.target
